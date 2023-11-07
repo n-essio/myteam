@@ -4,7 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Parameters;
 import io.quarkus.panache.common.Sort;
 import it.queryable.api.service.RsRepositoryServiceV3;
-import it.queryable.myteam.model.Team;
+import it.queryable.myteam.model.TeamPro;
 
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
@@ -14,17 +14,17 @@ import jakarta.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.Map;
 
-@Path("/api/v1/teams")
+@Path("/api/v1/teamspro")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Singleton
-public class TeamServiceRs extends RsRepositoryServiceV3<Team, String> {
+public class TeamProServiceRs extends RsRepositoryServiceV3<TeamPro, String> {
 
-	public TeamServiceRs() {
-		super(Team.class);
+	public TeamProServiceRs() {
+		super(TeamPro.class);
 	}
 
-	protected String getId(Team object) {
+	protected String getId(TeamPro object) {
 		// field with @id
 		return object.uuid;
 	}
@@ -35,7 +35,7 @@ public class TeamServiceRs extends RsRepositoryServiceV3<Team, String> {
 	}
 
 	@Override
-	public PanacheQuery<Team> getSearch(String orderBy) throws Exception {
+	public PanacheQuery<TeamPro> getSearch(String orderBy) throws Exception {
 		String query = null;
 		Map<String, Object> params = null;
 		if (nn("like.tagses")) {
@@ -58,21 +58,21 @@ public class TeamServiceRs extends RsRepositoryServiceV3<Team, String> {
 				query = query + " OR " + sb.toString();
 			}
 		}
-		PanacheQuery<Team> search;
+		PanacheQuery<TeamPro> search;
 		Sort sort = sort(orderBy);
 		if (sort != null) {
-			search = Team.find(query, sort, params);
+			search = TeamPro.find(query, sort, params);
 		} else {
-			search = Team.find(query, params);
+			search = TeamPro.find(query, params);
 		}
 		if (nn("obj.uuid")) {
-			search.filter("Team.obj.uuid", Parameters.with("uuid", get("obj.uuid")));
+			search.filter("TeamPro.obj.uuid", Parameters.with("uuid", get("obj.uuid")));
 		}
 		if (nn("obj.uuids")) {
-			search.filter("Team.obj.uuids", Parameters.with("uuids", asList("obj.uuids")));
+			search.filter("TeamPro.obj.uuids", Parameters.with("uuids", asList("obj.uuids")));
 		}
 		if (nn("like.name")) {
-			search.filter("Team.like.name", Parameters.with("name", likeParamToLowerCase("like.name")));
+			search.filter("TeamPro.like.name", Parameters.with("name", likeParamToLowerCase("like.name")));
 		}
 		return search;
 	}
