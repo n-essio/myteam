@@ -3,6 +3,7 @@ package it.queryable.api.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.queryable.api.management.AppConstants;
+import it.queryable.api.qeex.exceptions.QeexWebException;
 import it.queryable.api.util.DateUtils;
 
 import jakarta.ws.rs.core.Context;
@@ -16,9 +17,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.math.BigDecimal;
@@ -44,6 +43,17 @@ public abstract class RsResponseService implements Serializable {
         return Response.status(status).entity(jsonStr).build();
     }
 
+    public static Response jsonResponseObj(Map<String, Object> toJson, Status status) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonStr = "";
+        try {
+            jsonStr = objectMapper.writeValueAsString(toJson);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return Response.status(status).entity(jsonStr).build();
+    }
+
     public static Response jsonResponse(Status status, String key, Object value) {
         Map<String, String> toJson = new HashMap<String, String>();
         toJson.put(key, value.toString());
@@ -51,16 +61,33 @@ public abstract class RsResponseService implements Serializable {
     }
 
     public static Response jsonMessageResponse(Status status, Object object) {
+        if (object instanceof QeexWebException exception) {
+            Map<String, Object> toJson = new LinkedHashMap<>();
+            toJson.put("projectName", exception.projectName);
+            toJson.put("id", exception.id);
+            toJson.put("code", exception.code);
+            toJson.put("message", exception.message);
+            toJson.put("language", exception.language);
+            return jsonResponseObj(toJson, Status.INTERNAL_SERVER_ERROR);
+        } else
         if (object instanceof Throwable) {
             Throwable t = (Throwable) object;
             return jsonResponse(status, AppConstants.JSON_GENERIC_MESSAGE_KEY, getErrorMessage(t));
         } else {
             return jsonResponse(status, AppConstants.JSON_GENERIC_MESSAGE_KEY, "" + object);
-
         }
     }
 
     public static Response jsonErrorMessageResponse(Object error) {
+        if (error instanceof QeexWebException exception) {
+            Map<String, Object> toJson = new LinkedHashMap<>();
+            toJson.put("projectName", exception.projectName);
+            toJson.put("id", exception.id);
+            toJson.put("code", exception.code);
+            toJson.put("message", exception.message);
+            toJson.put("language", exception.language);
+            return jsonResponseObj(toJson, Status.INTERNAL_SERVER_ERROR);
+        } else
         if (error instanceof Throwable) {
             Throwable t = (Throwable) error;
             return jsonResponse(Status.INTERNAL_SERVER_ERROR, AppConstants.JSON_GENERIC_MESSAGE_KEY, getErrorMessage(t));
