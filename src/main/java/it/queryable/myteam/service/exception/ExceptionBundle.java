@@ -21,7 +21,7 @@ public interface ExceptionBundle {
 
     @QeexMessage(id = 105, code = 500, message = "name should not be empty")
     QeexWebException msg_105();
-    
+
     @QeexMessage(id = 106, code = 500, message = "project name should be unique, given: %s")
     QeexWebException msg_106(String name);
 
