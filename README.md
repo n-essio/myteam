@@ -1,9 +1,19 @@
 # myteam
 
 This project uses Quarkus and Queryable Queex.
+To install queryable:
+```
+./mvnw it.n-ess.queryable:queryable-maven-plugin:3.0.3:add
+./mvnw queryable:install
+./mvnw queryable:source
 
+To install qeex api/to generate implementation of created interfaces:
+```
+./mvnw queryable:qeexinstall
+./mvnw queryable:qeexsource
+```
 
-WE will define our exception typed:
+We will define our exception typed:
 https://github.com/n-essio/myteam/blob/main/src/main/java/it/queryable/myteam/service/exception/ExceptionBundle.java
 
 we will use in a Rest Service, in this way:
