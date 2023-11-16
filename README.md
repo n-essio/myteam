@@ -1,6 +1,10 @@
 # myteam
 
 This project uses Quarkus and Queryable Queex.
+
+Following this tutorial:
+https://github.com/n-essio/queryable-tutorial
+
 To install queryable:
 ```
 ./mvnw it.n-ess.queryable:queryable-maven-plugin:3.0.3:add
