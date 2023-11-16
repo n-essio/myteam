@@ -16,6 +16,15 @@ To install qeex api/to generate implementation of created interfaces:
 We will define our exception typed:
 https://github.com/n-essio/myteam/blob/main/src/main/java/it/queryable/myteam/service/exception/ExceptionBundle.java
 
+Pay attention to have:
+```
+@QeexExceptionBundle(project = "FLW", language = "it") // FLW is our short project name and we can define the default language
+public interface ExceptionBundle {
+
+@QeexMessage(message = "one exception for each typed error")
+QeexWebException simpleException();
+```
+
 we will use in a Rest Service, in this way:
 https://github.com/n-essio/myteam/blob/main/src/main/java/it/queryable/myteam/service/rs/ProjectServiceRs.java
 
