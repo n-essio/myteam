@@ -61,7 +61,7 @@
     <dependency>
       <groupId>it.n-ess.queryable</groupId>
       <artifactId>queryable-maven-plugin</artifactId>
-      <version>3.0.2</version>
+      <version>3.0.3</version>
     </dependency>
   </dependencies>
   <build>
@@ -122,7 +122,7 @@
       <plugin>
         <groupId>it.n-ess.queryable</groupId>
         <artifactId>queryable-maven-plugin</artifactId>
-        <version>3.0.2</version>
+        <version>3.0.3</version>
       </plugin>
     </plugins>
   </build>
