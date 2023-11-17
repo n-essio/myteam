@@ -33,12 +33,14 @@ we will use in a Rest Service, in this way:
 https://github.com/n-essio/myteam/blob/main/src/main/java/it/queryable/myteam/service/rs/ProjectServiceRs.java
 
 where we inject this ExceptionBundle:
+
 ```
 @Inject
 ExceptionBundle exceptionBundle;
 ```
 
-e lo usa poi qui sotto:
+and we will use in this way:
+
 ```
 @Override
 	protected void prePersist(Project project) throws Exception {
