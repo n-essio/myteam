@@ -10,6 +10,7 @@ To install queryable:
 ./mvnw it.n-ess.queryable:queryable-maven-plugin:3.0.3:add
 ./mvnw queryable:install
 ./mvnw queryable:source
+```
 
 To install qeex api/to generate implementation of created interfaces:
 ```
